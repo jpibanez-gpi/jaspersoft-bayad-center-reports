@@ -1,0 +1,66 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f0\b\fs24 \cf0 SELECT
+\f1\b0  
+\f0\b DISTINCT
+\f1\b0  p.id,\
+	p.internal_reference,\
+	p.beneficiary_customer_code,\
+	p.beneficiary_customer_account,\
+	p.total_amount,\
+	p.front_status,\
+	p.create_date,\
+	(
+\f0\b select
+\f1\b0  value_string 
+\f0\b as
+\f1\b0  prn 
+\f0\b from
+\f1\b0  ruca_test_psi_dwh.dwh_payment_line 
+\f0\b where
+\f1\b0  line = 'PartnerRefNo' 
+\f0\b and
+\f1\b0  payment_id = p.id) 
+\f0\b as
+\f1\b0  line\
+
+\f0\b FROM
+\f1\b0  ruca_test_psi_dwh.dwh_payment p\
+	
+\f0\b inner
+\f1\b0  
+\f0\b join
+\f1\b0  ruca_test_psi_dwh.dwh_payment_line pl 
+\f0\b ON
+\f1\b0  \
+	 p.id = pl.payment_id \
+	 
+\f0\b AND
+\f1\b0  pl.type = 'MULTISYS.Service.Response'\
+	 \
+
+\f0\b SELECT
+\f1\b0  bsph_devp_psi_dwh.dwh_payment.id,\
+	bsph_devp_psi_dwh.dwh_payment.internal_reference,\
+	bsph_devp_psi_dwh.dwh_payment.beneficiary_customer_name,\
+	bsph_devp_psi_dwh.dwh_payment.beneficiary_customer_account,\
+	bsph_devp_psi_dwh.dwh_payment.total_amount,\
+	bsph_devp_psi_dwh.dwh_payment.create_date,\
+	bsph_devp_psi_dwh.dwh_payment.front_status\
+
+\f0\b FROM
+\f1\b0  bsph_devp_psi_dwh.dwh_payment\
+
+\f0\b WHERE
+\f1\b0  document_type 
+\f0\b LIKE
+\f1\b0  '%UTILITY%'\
+
+\f0\b AND
+\f1\b0  method = 'Utility'}
